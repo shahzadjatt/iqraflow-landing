@@ -1,145 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IqraFlow AI - Islamic Learning Ecosystem</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Montserrat', sans-serif;
-    }
-    body {
-      background-color: #f9f9f9;
-      color: #222;
-      line-height: 1.6;
-    }
-    header {
-      background-color: #0a1f44;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: white;
-    }
-    header img {
-      height: 60px;
-    }
-    header h1 {
-      font-size: 24px;
-    }
-    .hero {
-      background: linear-gradient(to right, #0a1f44, #203a72);
-      color: white;
-      text-align: center;
-      padding: 80px 20px;
-    }
-    .hero h2 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-    .hero a {
-      background: #f9c900;
-      color: #000;
-      padding: 12px 25px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .section {
-      padding: 60px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .section h3 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .modules {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .card h4 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    .card p {
-      font-size: 14px;
-      color: #555;
-    }
-    .form-embed {
-      margin-top: 40px;
-      text-align: center;
-    }
-    footer {
-      background-color: #0a1f44;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IqraFlow AI - Islamic Learning Ecosystem</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for general text (consistent with waitlist and quran page) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Changed to Inter for consistency */
+            background-color: #0a0a1a; /* Very dark blue-black base */
+            color: #e0e0e0; /* Lighter text for contrast */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #15152a; /* Darker track */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8e2de2; /* Purple thumb */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6a0dad; /* Darker purple on hover */
+        }
+
+        /* Basic animations for futuristic feel */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(142, 45, 226, 0.4); }
+            50% { border-color: rgba(255, 0, 128, 0.6); }
+        }
+        .pulse-border-anim {
+            animation: pulse-border 3s infinite alternate;
+        }
+
+        /* Gradient text for titles */
+        .text-gradient {
+            background: linear-gradient(45deg, #8e2de2, #ff00ff, #00f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Specific styling for the waitlist form container to fit the theme */
+        .waitlist-form-container {
+            background-color: #1a1a2e; /* Darker background */
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid #8e2de2; /* Purple border */
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .waitlist-form-container input[type="email"],
+        .waitlist-form-container input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #4a4a5a; /* Darker border */
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #2a2a3e; /* Dark input background */
+            color: #e0e0e0;
+            transition: border-color 0.2s;
+        }
+        .waitlist-form-container input[type="email"]:focus,
+        .waitlist-form-container input[type="text"]:focus {
+            outline: none;
+            border-color: #ff00ff; /* Pink focus */
+            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.2);
+        }
+        .waitlist-form-container button[type="submit"] {
+            width: 100%;
+            padding: 12px 20px;
+            background-image: linear-gradient(45deg, #8e2de2, #ff00ff); /* Gradient button */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-image 0.2s, transform 0.1s;
+            box-shadow: 0 4px 10px rgba(142, 45, 226, 0.3);
+        }
+        .waitlist-form-container button[type="submit"]:hover {
+            background-image: linear-gradient(45deg, #6a0dad, #cc00cc); /* Darker gradient on hover */
+            transform: translateY(-1px);
+        }
+        .waitlist-form-container .message-box {
+            background-color: #2a2a3e; /* Darker message box */
+            color: #e0e0e0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            text-align: left;
+            border: 1px solid #8e2de2;
+        }
+        .waitlist-form-container .message-box.error {
+            background-color: #4a2a3e; /* Reddish for error */
+            color: #ffcccc;
+            border: 1px solid #ff0000;
+        }
+        .waitlist-form-container .user-id-display {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #a0a0a0;
+            word-break: break-all;
+            text-align: left;
+        }
+        .waitlist-form-container .user-id-display strong {
+            color: #e0e0e0;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <img src="Iqraflow%20ai%20logo%20image.png" alt="IqraFlow AI Logo" />
-    <h1>IqraFlow AI</h1>
-  </header>
+<body class="flex flex-col min-h-screen">
 
-  <section class="hero">
-    <h2>Welcome to IqraFlow AI</h2>
-    <p>The future of Islamic education and digital learning – all in one ethical platform.</p>
-    <a href="#waitlist">Join the Waitlist</a>
-  </section>
+    <!-- Header/Navigation Bar -->
+    <header class="bg-gray-900 bg-opacity-80 backdrop-blur-md shadow-lg py-4 px-6 md:px-12 flex justify-between items-center fixed w-full z-50 border-b border-purple-600">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">
+                <i class="fas fa-brain"></i>
+            </div>
+            <span class="text-3xl font-extrabold text-white tracking-wide">Iqraflow AI</span>
+        </div>
+        <nav class="hidden md:flex space-x-8">
+            <a href="index.html" class="text-purple-400 font-medium transition duration-300 ease-in-out text-lg">Home</a>
+            <!-- Updated Ilm link to quran.html -->
+            <a href="quran.html" class="text-gray-300 hover:text-purple-400 font-medium transition duration-300 ease-in-out text-lg">Ilm (قرآن)</a>
+            <a href="#" class="text-gray-300 hover:text-purple-400 font-medium transition duration-300 ease-in-out text-lg">Courses</a>
+            <a href="#" class="text-gray-300 hover:text-purple-400 font-medium transition duration-300 ease-in-out text-lg">Community</a>
+        </nav>
+        <div class="hidden md:block">
+            <button class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-7 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-700 transition duration-300 ease-in-out shadow-lg">Login</button>
+        </div>
+        <button class="md:hidden text-gray-300 focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </header>
 
-  <section class="section">
-    <h3>Our Core Modules</h3>
-    <div class="modules">
-      <div class="card">
-        <h4>IqraFlow Ilm</h4>
-        <p>Free Islamic learning for all ages – Qur'an, Hadith, Sunnah & more.</p>
-      </div>
-      <div class="card">
-        <h4>IqraFlow Courses</h4>
-        <p>Modern digital skills with Islamic ethics – Canva, ChatGPT, Blogging.</p>
-      </div>
-      <div class="card">
-        <h4>IqraFlow Games</h4>
-        <p>Interactive, educational games with Islamic values for kids & adults.</p>
-      </div>
-      <div class="card">
-        <h4>IqraFlow Rishta</h4>
-        <p>A halal Nikah matchmaking service built on trust, privacy, and sincerity.</p>
-      </div>
-    </div>
-  </section>
+    <main class="flex-grow pt-20"> <!-- pt-20 to account for fixed header -->
+        <section class="hero bg-gradient-to-r from-blue-900 to-indigo-900 text-white text-center py-20 px-4">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4 text-gradient">Welcome to IqraFlow AI</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">The future of Islamic education and digital learning – all in one ethical platform.</p>
+            <a href="#waitlist" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:from-purple-600 hover:to-pink-700 transition duration-300 ease-in-out shadow-lg">Join the Waitlist</a>
+        </section>
 
-  <section class="section" id="waitlist">
-    <h3>Join the Waitlist</h3>
-    <div class="form-embed">
-      <iframe src="https://forms.gle/YOUR_GOOGLE_FORM_LINK" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    </div>
-  </section>
+        <section class="section py-16 px-4 max-w-6xl mx-auto animate-fadeIn">
+            <h3 class="text-3xl md:text-4xl font-bold text-center text-gradient mb-12">Our Core Modules</h3>
+            <div class="modules grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a href="quran.html" class="card bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-700 hover:border-pink-500 transition duration-300 block">
+                    <div class="text-5xl text-purple-400 mb-4"><i class="fas fa-quran"></i></div>
+                    <h4 class="text-xl font-semibold text-white mb-2">IqraFlow Ilm</h4>
+                    <p class="text-gray-300 text-sm">Free Islamic learning for all ages – Qur'an, Hadith, Sunnah & more.</p>
+                </a>
+                <div class="card bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-700 hover:border-pink-500 transition duration-300">
+                    <div class="text-5xl text-pink-400 mb-4"><i class="fas fa-graduation-cap"></i></div>
+                    <h4 class="text-xl font-semibold text-white mb-2">IqraFlow Courses</h4>
+                    <p class="text-gray-300 text-sm">Modern digital skills with Islamic ethics – Canva, ChatGPT, Blogging.</p>
+                </div>
+                <div class="card bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-700 hover:border-pink-500 transition duration-300">
+                    <div class="text-5xl text-blue-400 mb-4"><i class="fas fa-gamepad"></i></div>
+                    <h4 class="text-xl font-semibold text-white mb-2">IqraFlow Games</h4>
+                    <p class="text-gray-300 text-sm">Interactive, educational games with Islamic values for kids & adults.</p>
+                </div>
+                <div class="card bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-700 hover:border-pink-500 transition duration-300">
+                    <div class="text-5xl text-green-400 mb-4"><i class="fas fa-heart"></i></div>
+                    <h4 class="text-xl font-semibold text-white mb-2">IqraFlow Rishta</h4>
+                    <p class="text-gray-300 text-sm">A halal Nikah matchmaking service built on trust, privacy, and sincerity.</p>
+                </div>
+            </div>
+        </section>
 
-  <footer>
-    <p>&copy; 2025 IqraFlow AI. All rights reserved.</p>
-  </footer>
+        <section class="section py-16 px-4 max-w-6xl mx-auto animate-fadeIn" id="waitlist">
+            <h3 class="text-3xl md:text-4xl font-bold text-center text-gradient mb-12">Join the Waitlist</h3>
+            <div class="waitlist-form-container">
+                <p class="text-gray-300 mb-8">Sign up to be the first to know when we launch!</p>
+
+                <form id="waitlistForm" class="space-y-4">
+                    <div>
+                        <input type="text" id="name" placeholder="Your Name" required class="rounded-lg">
+                    </div>
+                    <div>
+                        <input type="email" id="email" placeholder="Your Email" required class="rounded-lg">
+                    </div>
+                    <button type="submit" class="rounded-lg">Join Waitlist</button>
+                </form>
+
+                <div id="messageBox" class="message-box"></div>
+                <div id="userIdDisplay" class="user-id-display"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-gray-400 py-6 px-6 border-t border-gray-700 text-center">
+        <p class="text-sm">&copy; 2025 IqraFlow AI. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables for Firebase instances
+        let app;
+        let db;
+        let auth;
+        let userId = 'loading...'; // Default state before auth is ready
+
+        // Function to display messages to the user
+        function showMessage(message, isError = false) {
+            const messageBox = document.getElementById('messageBox'); // Changed ID to match waitlist-app
+            if (messageBox) {
+                messageBox.textContent = message;
+                messageBox.classList.remove('hidden', 'error');
+                if (isError) {
+                    messageBox.classList.add('error');
+                }
+                messageBox.style.display = 'block'; // Ensure it's visible
+            } else {
+                console.error("Message box element not found!");
+            }
+        }
+
+        // Function to update the user ID display
+        function updateUserIdDisplay() {
+            const userIdDisplay = document.getElementById('userIdDisplay'); // Changed ID to match waitlist-app
+            if (userIdDisplay) {
+                userIdDisplay.innerHTML = `<strong>Your User ID:</strong> ${userId}`;
+            }
+        }
+
+        // Initialize Firebase and set up authentication
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log("DOM Content Loaded. Initializing Firebase...");
+
+            try {
+                // Parse Firebase config from the global variable
+                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+
+                if (Object.keys(firebaseConfig).length === 0) {
+                    throw new Error("Firebase configuration not found. Please ensure __firebase_config is set.");
+                }
+
+                // Initialize Firebase app
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                console.log("Firebase app and Firestore initialized.");
+
+                // Set up authentication state listener
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        // User is signed in.
+                        userId = user.uid;
+                        console.log("User signed in:", userId);
+                        updateUserIdDisplay();
+                        showMessage("Successfully connected to the application!", false);
+                    } else {
+                        // User is signed out or not yet signed in.
+                        console.log("No user signed in. Attempting to sign in...");
+                        try {
+                            // Try to sign in with custom token if available, otherwise anonymously
+                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                                await signInWithCustomToken(auth, __initial_auth_token);
+                                console.log("Signed in with custom token.");
+                            } else {
+                                await signInAnonymously(auth);
+                                console.log("Signed in anonymously.");
+                            }
+                        } catch (error) {
+                            console.error("Error during initial authentication:", error);
+                            showMessage(`Authentication failed: ${error.message}`, true);
+                            userId = 'Not authenticated';
+                            updateUserIdDisplay();
+                        }
+                    }
+                });
+
+                // Get the form element
+                const waitlistForm = document.getElementById('waitlistForm'); // Changed ID to match waitlist-app
+                if (waitlistForm) {
+                    waitlistForm.addEventListener('submit', async (e) => {
+                        e.preventDefault(); // Prevent default form submission
+
+                        const nameInput = document.getElementById('name');
+                        const emailInput = document.getElementById('email');
+
+                        const name = nameInput.value.trim();
+                        const email = emailInput.value.trim();
+
+                        if (!name || !email) {
+                            showMessage("Please enter both your name and email.", true);
+                            return;
+                        }
+
+                        if (!auth.currentUser) {
+                            showMessage("Authentication not ready. Please wait a moment.", true);
+                            console.warn("Attempted to submit form before user was authenticated.");
+                            return;
+                        }
+
+                        try {
+                            // Define the collection path based on public data rules
+                            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                            const waitlistCollectionRef = collection(db, `artifacts/${appId}/public/data/waitlist_entries`);
+
+                            // Add a new document to the 'waitlist_entries' collection
+                            await addDoc(waitlistCollectionRef, {
+                                name: name,
+                                email: email,
+                                userId: auth.currentUser.uid, // Store the authenticated user's ID
+                                timestamp: serverTimestamp() // Firestore server timestamp
+                            });
+
+                            showMessage("Successfully joined the waitlist! We'll be in touch.", false);
+                            nameInput.value = ''; // Clear form fields
+                            emailInput.value = '';
+                        } catch (error) {
+                            console.error("Error adding document to Firestore:", error);
+                            showMessage(`Failed to join waitlist: ${error.message}`, true);
+                        }
+                    });
+                } else {
+                    console.error("Waitlist form not found!");
+                    showMessage("Application error: Waitlist form not found.", true);
+                }
+
+            } catch (error) {
+                console.error("Error initializing Firebase or authenticating:", error);
+                showMessage(`Initialization error: ${error.message}`, true);
+            }
+        });
+    </script>
 </body>
 </html>
