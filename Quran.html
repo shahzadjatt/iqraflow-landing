@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IqraFlow Ilm: Quran - Iqraflow AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Arial is system font, Inter fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* Primary font set to Arial */
+            background-color: #0a0a1a; /* Very dark blue-black base */
+            color: #e0e0e0; /* Lighter text for contrast */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #15152a; /* Darker track */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8e2de2; /* Purple thumb */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6a0dad; /* Darker purple on hover */
+        }
+
+        /* Basic animations for futuristic feel */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(142, 45, 226, 0.4); }
+            50% { border-color: rgba(255, 0, 128, 0.6); }
+        }
+        .pulse-border-anim {
+            animation: pulse-border 3s infinite alternate;
+        }
+
+        /* Gradient text for titles */
+        .text-gradient {
+            background: linear-gradient(45deg, #8e2de2, #ff00ff, #00f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Arabic font fallback - you might want to replace this with a specific Nastaleeq font if available and desired */
+        .font-arabic {
+            font-family: 'Arial', 'Noto Naskh Arabic', sans-serif; /* Fallback to Noto Naskh or other Arabic font */
+        }
+
+        /* Message box styling for local viewing warning */
+        .local-message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 165, 0, 0.3); /* Orange glow for warning */
+            z-index: 1000;
+            display: flex; /* Always visible if local */
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            border: 1px solid #ffa500; /* Orange border */
+        }
+        .local-message-box button {
+            background-color: #ffa500; /* Orange button */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: bold;
+        }
+        .local-message-box button:hover {
+            background-color: #cc8400; /* Darker orange */
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header/Navigation Bar (Simplified for module) -->
+    <header class="bg-gray-900 bg-opacity-80 backdrop-blur-md shadow-lg py-4 px-6 md:px-12 flex justify-between items-center fixed w-full z-50 border-b border-purple-600">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">
+                <i class="fas fa-brain"></i>
+            </div>
+            <span class="text-3xl font-extrabold text-white tracking-wide">Iqraflow AI</span>
+        </div>
+        <nav class="hidden md:flex space-x-8">
+            <a href="index.html" class="text-gray-300 hover:text-purple-400 font-medium transition duration-300 ease-in-out text-lg">Home</a>
+            <a href="#" class="text-purple-400 font-medium text-lg">Ilm (قرآن)</a>
+            <a href="#" class="text-gray-300 hover:text-purple-400 font-medium transition duration-300 ease-in-out text-lg">Courses</a>
+            <a href="#" class="text-gray-300 hover:text-purple-400 font-medium transition duration-300 ease-in-out text-lg">Community</a>
+        </nav>
+        <div class="hidden md:block">
+            <button class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-7 py-3 rounded-full font-semibold hover:from-purple-600 hover:to-pink-700 transition duration-300 ease-in-out shadow-lg">Login</button>
+        </div>
+        <button class="md:hidden text-gray-300 focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </header>
+
+    <main class="flex-grow flex pt-20"> <!-- pt-20 to account for fixed header -->
+        <!-- Sidebar for Surah/Juz Navigation -->
+        <aside class="w-64 bg-gray-900 border-r border-gray-700 p-6 overflow-y-auto hidden md:block animate-fadeIn">
+            <h3 class="text-xl font-bold text-gradient mb-6">سورہ (Surahs)</h3>
+            <ul class="space-y-2 text-gray-300 text-lg">
+                <li><a href="#" class="block p-2 rounded-md hover:bg-purple-800 hover:text-white transition duration-200">الفاتحة (Al-Fatiha)</a></li>
+                <li><a href="#" class="block p-2 rounded-md bg-purple-700 text-white">البقرة (Al-Baqarah)</a></li>
+                <li><a href="#" class="block p-2 rounded-md hover:bg-purple-800 hover:text-white transition duration-200">آل عمران (Al-Imran)</a></li>
+                <li><a href="#" class="block p-2 rounded-md hover:bg-purple-800 hover:text-white transition duration-200">النساء (An-Nisa)</a></li>
+                <!-- More Surahs would go here -->
+                <li class="pt-4 border-t border-gray-700 mt-4"><h3 class="text-xl font-bold text-gradient mb-2">پارہ (Juz)</h3></li>
+                <li><a href="#" class="block p-2 rounded-md hover:bg-purple-800 hover:text-white transition duration-200">پارہ 1 (Juz 1)</a></li>
+                <li><a href="#" class="block p-2 rounded-md hover:bg-purple-800 hover:text-white transition duration-200">پارہ 2 (Juz 2)</a></li>
+                <!-- More Juz would go here -->
+            </ul>
+        </aside>
+
+        <!-- Main Quran Content Area -->
+        <section class="flex-grow p-6 md:p-10 bg-gray-950 animate-fadeIn">
+            <div class="max-w-4xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold text-center text-gradient mb-8">
+                    سورة البقرة (Al-Baqarah)
+                </h1>
+                <div class="flex justify-center items-center space-x-4 mb-8">
+                    <button class="bg-purple-700 text-white px-5 py-3 rounded-full text-lg hover:bg-purple-800 transition duration-300 shadow-lg"><i class="fas fa-play mr-2"></i> تلاوت (Recite)</button>
+                    <select class="bg-gray-700 text-white p-3 rounded-md border border-purple-600 focus:outline-none focus:ring-2 focus:ring-pink-500 text-lg">
+                        <option>اردو ترجمہ (Urdu Translation)</option>
+                        <option>English Translation</option>
+                        <option>تفسیر مختصر (Short Tafsir)</option>
+                    </select>
+                </div>
+
+                <!-- Quranic Ayahs with Translation -->
+                <div class="space-y-10">
+                    <!-- Ayah 1 -->
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-700 pulse-border-anim">
+                        <p class="text-right text-3xl md:text-4xl font-arabic leading-relaxed mb-4 text-white">
+                            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                        </p>
+                        <p class="text-lg md:text-xl text-gray-300 leading-relaxed text-right">
+                            شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے۔
+                        </p>
+                        <p class="text-lg md:text-xl text-gray-400 leading-relaxed text-right mt-2">
+                            In the name of Allah, the Most Gracious, the Most Merciful.
+                        </p>
+                        <div class="flex justify-end mt-4 space-x-3 text-gray-400">
+                            <button class="hover:text-pink-400 transition duration-200"><i class="fas fa-bookmark"></i></button>
+                            <button class="hover:text-pink-400 transition duration-200"><i class="fas fa-share-alt"></i></button>
+                            <button class="hover:text-pink-400 transition duration-200"><i class="fas fa-comment-dots"></i></button>
+                            <span class="text-sm"> (2:1)</span>
+                        </div>
+                    </div>
+
+                    <!-- Ayah 2 (Mock Content) -->
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-700">
+                        <p class="text-right text-3xl md:text-4xl font-arabic leading-relaxed mb-4 text-white">
+                            ذَٰلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ هُدًى لِّلْمُتَّقِينَ
+                        </p>
+                        <p class="text-lg md:text-xl text-gray-300 leading-relaxed text-right">
+                            یہ وہ کتاب ہے جس میں کوئی شک نہیں، پرہیزگاروں کے لیے ہدایت ہے۔
+                        </p>
+                        <p class="text-lg md:text-xl text-gray-400 leading-relaxed text-right mt-2">
+                            This is the Book about which there is no doubt, a guidance for those conscious of Allah.
+                        </p>
+                        <div class="flex justify-end mt-4 space-x-3 text-gray-400">
+                            <button class="hover:text-pink-400 transition duration-200"><i class="fas fa-bookmark"></i></button>
+                            <button class="hover:text-pink-400 transition duration-200"><i class="fas fa-share-alt"></i></button>
+                            <button class="hover:text-pink-400 transition duration-200"><i class="fas fa-comment-dots"></i></button>
+                            <span class="text-sm"> (2:2)</span>
+                        </div>
+                    </div>
+                    <!-- More Ayahs would go here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Simplified for module) -->
+    <footer class="bg-gray-950 text-gray-400 py-6 px-6 border-t border-gray-700 text-center">
+        <p class="text-sm">&copy; 2025 Iqraflow AI. All rights reserved. Ilm Module.</p>
+    </footer>
+
+    <!-- Local Viewing Message Box -->
+    <div id="localMessageBox" class="local-message-box hidden">
+        <p class="text-xl font-bold mb-4">صفحہ صحیح سے لوڈ نہیں ہو رہا؟</p>
+        <p class="text-lg mb-4">
+            یہ صفحہ جدید ویب ٹیکنالوجیز استعمال کرتا ہے اور اسے براہ راست آپ کے کمپیوٹر سے کھولنے پر مکمل طور پر لوڈ نہیں ہو سکتا۔
+        </p>
+        <p class="text-lg mb-6">
+            براہ کرم اسے ایک **ویب سرور** پر دیکھیں (جیسے کہ ہم نے Firebase Hosting پر deploy کیا ہے) تاکہ تمام اسٹائلنگ اور فنکشنلٹی صحیح سے کام کرے۔
+        </p>
+        <button onclick="document.getElementById('localMessageBox').classList.add('hidden');">سمجھ گیا (Got it)</button>
+    </div>
+
+    <script>
+        // Check if the page is loaded locally (via file:// protocol)
+        if (window.location.protocol === 'file:') {
+            document.getElementById('localMessageBox').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
